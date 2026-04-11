@@ -14,15 +14,6 @@ export interface Project {
 
 export const PROJECTS: Project[] = [
   {
-    id: "braindump",
-    title: "Brain Dump",
-    description: "An app developed for Google Play and as a PWA, designed to help users gets thoughts out of their head and find clarity and peace of mind.", 
-    image: "projects/braindump_project.png",
-    tags: [TAGS.FLUTTER, TAGS.DART, TAGS.FIREBASE, TAGS.PLAYSTORE, TAGS.PWA],
-    href: "/projects/braindump",
-    size: "L",
-  },
-  {
     id: "bjorns_vindusvask",
     title: "Bjørns Vindusvask Website",
     description: "A simple, clean website for a local window cleaning business, showcasing their services and allowing customers to easily get in touch.",
@@ -31,6 +22,42 @@ export const PROJECTS: Project[] = [
     size: "S",
   },
   {
+    id: "braindump",
+    title: "Brain Dump",
+    description: "An app developed for Google Play and as a PWA, designed to help users gets thoughts out of their head and find clarity and peace of mind.",
+    image: "projects/braindump_project.png",
+    tags: [TAGS.FLUTTER, TAGS.DART, TAGS.FIREBASE, TAGS.PLAYSTORE, TAGS.PWA],
+    href: "/projects/braindump",
+    size: "L",
+  },
+  {
+    id: "what_i_eat",
+    title: "What_I_Eat",
+    description: "An photo logging app for tracking what you eat.",
+    tags: [TAGS.FLUTTER, TAGS.DART, TAGS.FIREBASE],
+    href: "/projects/what_i_eat",
+    size: "M",
+  },
+  {
+    id: "mealplan",
+    title: "Meal Plan",
+    description: "A PWA designed to help users plan their meals for the week",
+    tags: [TAGS.PWA, TAGS.FLUTTER, TAGS.DART, TAGS.FIREBASE],
+    href: "/projects/mealplan",
+    size: "M",
+
+  },
+  {
+    id: "shared_kitchen",
+    title: "Shared Kitchen",
+    description: "A PWA designed to connect people who want to share recipes, cooking tips, and meal ideas in a collaborative online space.",
+    image: "projects/shared_kitchen_project.png",
+    tags: [TAGS.PWA, TAGS.FLUTTER, TAGS.DART, TAGS.FIREBASE],
+    href: "/projects/shared_kitchen",
+    size: "L",
+  },
+
+  {
     id: "homepage",
     title: "My Homepage",
     description: "This very website! Built with Next.js and Tailwind CSS, it's a personal portfolio showcasing my projects and skills as a developer.",
@@ -38,23 +65,26 @@ export const PROJECTS: Project[] = [
     href: "/projects/homepage",
     size: "S",
   },
-  {
-    id: "4",
-    title: "Meal Plan",  
-    description: "A PWA designed to help users plan their meals for the week, create shopping lists, and discover new recipes based on their dietary preferences and restrictions.",
-    tags: [TAGS.PWA, TAGS.REACT, TAGS.JAVASCRIPT],
-    href: "/projects/mealplan",
-    size: "M",
 
-  },
   {
-    id: "5",
-    title: "Shared Kitchen",  
-    description: "A mobile app designed to connect people who want to share kitchen space and resources, fostering a sense of community and collaboration.",
+    id: "next",
+    title: "Next",
+    description: "A gamified planning app, integrated with Google Tasks.",
     tags: [TAGS.FLUTTER, TAGS.DART, TAGS.FIREBASE],
-    href: "/projects/shared_kitchen",
-    size: "L",
+    href: "/projects/next",
+    size: "M",
   },
 
-  
+
+
+
+
+
+
+
+
+
+
+
+
 ];

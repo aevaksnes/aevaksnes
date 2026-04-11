@@ -15,22 +15,23 @@ export interface Update {
   title: string;
   content: string;
   category: UpdateCategory;
-  image?: string; 
+  image?: string;
   links?: { label: string; url: string }[];
-  projectId?: string; 
+  projectId?: string;
   tags: string[];
 }
 
 export const UPDATES: Update[] = [
+
   {
-    id: "1",
-    date: "2026-04-10",
-    title: "My Homepage Update Page Added",
-    content: "Added a new page to my homepage where I will post updates about my projects, new features, bug fixes, and other news related to my work as a developer. This allows visitors to stay informed about the latest developments and improvements across all my projects.",
+    id: "3",
+    date: "2026-04-11",
+    title: "Homepage moved to Vercel",
+    content: "Realizing the benefits of using Vercel for deployment, I decided to migrate my homepage to the platform.",
     category: "feature",
-    links: [{ label: "View Updates", url: "https://aevaksnes.github.io/updates" }],
-    tags: [TAGS.NEXTJS]
+    tags: [TAGS.VERCEL]
   },
+
   {
     id: "2",
     date: "2026-04-10",
@@ -38,6 +39,16 @@ export const UPDATES: Update[] = [
     content: "Added a new page to my homepage where JSON files for my braindump prompts are available for download.",
     category: "feature",
     links: [{ label: "View Downloads", url: "https://aevaksnes.github.io/downloads" }],
+    tags: [TAGS.NEXTJS]
+  },
+
+  {
+    id: "1",
+    date: "2026-04-10",
+    title: "My Homepage Update Page Added",
+    content: "Added a new page to my homepage where I will post updates about my projects, new features, bug fixes, and other news related to my work as a developer. This allows visitors to stay informed about the latest developments and improvements across all my projects.",
+    category: "feature",
+    links: [{ label: "View Updates", url: "https://aevaksnes.github.io/updates" }],
     tags: [TAGS.NEXTJS]
   },
 

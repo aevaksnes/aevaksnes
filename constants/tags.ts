@@ -12,4 +12,5 @@ export const TAGS = {
     JAVASCRIPT: "JavaScript",
     PLAYSTORE: "Google Play",
     ANDROID: "Android",
+    VERCEL: "Vercel",
 } as const;
