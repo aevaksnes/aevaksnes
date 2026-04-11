@@ -1,0 +1,15 @@
+export const TAGS = {
+    FLUTTER: "Flutter",
+    NEXTJS: "Next.js",
+    PWA: "PWA",
+    UI_DESIGN: "UI Design",
+    REACT: "React",
+    TAILWIND: "Tailwind CSS",
+    DART: "Dart",
+    FIREBASE: "Firebase",
+    HTML: "HTML",
+    CSS: "CSS",
+    JAVASCRIPT: "JavaScript",
+    PLAYSTORE: "Google Play",
+    ANDROID: "Android",
+} as const;
