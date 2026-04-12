@@ -23,12 +23,23 @@ export interface Update {
 
 export const UPDATES: Update[] = [
 
+    {
+    id: "4",
+    date: "2026-04-12",
+    title: "Environment Variables Added",
+    content: "To enhance security and flexibility, I added environment variables to the ankeras website project. This allows me to manage sensitive information and configuration settings more securely and efficiently.",
+    category: "fix",
+    projectId: "ankeras",
+    tags: [TAGS.VERCEL]
+  },
+
   {
     id: "3",
     date: "2026-04-11",
     title: "Homepage moved to Vercel",
     content: "Realizing the benefits of using Vercel for deployment, I decided to migrate my homepage to the platform.",
     category: "feature",
+    projectId: "homepage",
     tags: [TAGS.VERCEL]
   },
 
@@ -39,6 +50,7 @@ export const UPDATES: Update[] = [
     content: "Added a new page to my homepage where JSON files for my braindump prompts are available for download.",
     category: "feature",
     links: [{ label: "View Downloads", url: "https://aevaksnes.github.io/downloads" }],
+    projectId: "homepage",
     tags: [TAGS.NEXTJS]
   },
 
@@ -49,6 +61,7 @@ export const UPDATES: Update[] = [
     content: "Added a new page to my homepage where I will post updates about my projects, new features, bug fixes, and other news related to my work as a developer. This allows visitors to stay informed about the latest developments and improvements across all my projects.",
     category: "feature",
     links: [{ label: "View Updates", url: "https://aevaksnes.github.io/updates" }],
+    projectId: "homepage",
     tags: [TAGS.NEXTJS]
   },
 
