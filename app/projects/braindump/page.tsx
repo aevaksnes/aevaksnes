@@ -72,10 +72,19 @@ export default function Braindump() {
                         <div className="p-6 rounded-2xl border border-white/10 bg-white/5">
                             <div className="flex items-center gap-2 mb-4 text-brand-teal">
                                 <Smartphone size={20} />
-                                <span className="font-bold uppercase text-xs tracking-widest">Next</span>
+                                <span className="font-bold uppercase text-xs tracking-widest">Step 1</span>
                             </div>
                             <p className="text-sm dark:text-gray-300">Finalizing closed testing on <strong>Google Play</strong> with 20 dedicated testers.</p>
                         </div>
+
+                        <div className="p-6 rounded-2xl border border-white/10 bg-white/5">
+                            <div className="flex items-center gap-2 mb-4 text-brand-teal">
+                                <Smartphone size={20} />
+                                <span className="font-bold uppercase text-xs tracking-widest">Step 2</span>
+                            </div>
+                            <p className="text-sm dark:text-gray-300">Release on <strong>Google Play</strong></p>
+                        </div>
+
 
                         <div className="p-6 rounded-2xl border border-white/10 bg-white/5 opacity-60">
                             <div className="flex items-center gap-2 mb-4 text-gray-400">
