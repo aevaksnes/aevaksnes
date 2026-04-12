@@ -79,21 +79,11 @@ export const PROJECTS: Project[] = [
     id: "ankeras",
     title: "Anker AS Website",
     description: "A website for a garage, that deals with tires, wheels, car rentals, car sales, batteries and more, with a content management system.",
+    image: "projects/ankeras_project.png",
     tags: [TAGS.NEXTJS, TAGS.REACT, TAGS.TAILWIND, TAGS.UI_DESIGN],
     href: "/projects/ankeras",
     size: "L",
   },
-
-
-
-
-
-
-
-
-
-
-
 
 
 ];

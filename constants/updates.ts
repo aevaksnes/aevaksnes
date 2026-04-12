@@ -24,6 +24,16 @@ export interface Update {
 export const UPDATES: Update[] = [
 
     {
+    id: "5",
+    date: "2026-04-12",
+    title: "Added a project and images",
+    content: "I added a new project to my portfolio, and included images for both the new project and an existing one. This helps to visually showcase my work and provide a better understanding of the projects I've completed.",
+    category: "fix",
+    projectId: "homepage",
+    tags: [TAGS.UI_DESIGN]
+  },
+
+    {
     id: "4",
     date: "2026-04-12",
     title: "Environment Variables Added",
