@@ -1,36 +1,35 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Hi, I'm aevaksnes! 👋
 
-## Getting Started
+I am a solution-oriented developer based in Stavanger, Norway. With a background in both economics/accounting and modern software development, I am passionate about building digital tools that solve real-world friction and clear mental clutter.
 
-First, run the development server:
+### 🛠 What I'm Building Right Now
+* **Anker AS:** Digital transformation for a legacy automotive business (Next.js + Custom Firebase CMS).
+* **Braindump:** A PWA designed for mental offloading and focus (Flutter), and hopefully soon available on Google Play.
+* **Next:** A gamified productivity app integrated with the Google Tasks API.
+* **Shared Kitchen:** A collaborative social space for groups to share recipes and meal ideas.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+### 🧰 Technical Toolkit
+* **Frontend:** Next.js, React, Tailwind CSS, Flutter/Dart.
+* **Backend:** Firebase (Firestore, Auth, Cloud Functions, Hosting).
+* **Legacy & Systems:** Experience with ERP systems (Dynamics 365) and financial management.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+---
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### 💡 My Philosophy
+> "I look for order in chaos. Whether it's organizing a busy household or architecting a content management system for a garage, precision, and simplicity are always my goals."
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+---
 
-## Learn More
+### 🏃‍♀️ Beyond the Code
+* **Fitness Instructor:** I teach classes at my local gym. I believe a strong body fuels a sharp mind.
+* **Problem Solver:** Managing life as a mother of teenagers with extra needs has taught me more about adaptability and patience than any textbook ever could.
 
-To learn more about Next.js, take a look at the following resources:
+---
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+### 📫 Let's Connect!
+* 🌍 Portfolio: [aevaksnes.github.io](https://aevaksnes.github.io)
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+---
 
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+### 📊 GitHub Stats
+![GitHub Streak](https://github-readme-streak-stats.herokuapp.com/?user=aevaksnes&theme=transparent&ring=00adb5&fire=00adb5&currStreakNum=00adb5)
