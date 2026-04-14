@@ -44,14 +44,14 @@ export default function Home() {
             </div>
           </Link>
 
-          {/* BLOG CARD */}
-          <Link href="/blog" className="group bg-white dark:bg-white/5 p-8 rounded-3xl border border-gray-100 dark:border-gray-800 shadow-lg hover:border-brand-orange hover:scale-[1.03] transition-all duration-300">
+          {/* UPDATES CARD */}
+          <Link href="/updates" className="group bg-white dark:bg-white/5 p-8 rounded-3xl border border-gray-100 dark:border-gray-800 shadow-lg hover:border-brand-orange hover:scale-[1.03] transition-all duration-300">
             <div className="flex items-center gap-4 mb-4">
               <div className="text-4xl p-3 rounded-2xl bg-brand-orange/10 text-brand-orange group-hover:bg-brand-orange group-hover:text-white transition-colors">
                 <FileTerminal className="w-8 h-8 text-brand-orange group-hover:text-white" />
               </div>
               <h2 className="text-2xl font-semibold text-gray-900 dark:text-white">
-                Blog
+                Updates
               </h2>
             </div>
             <p className="text-gray-700 dark:text-gray-300 mb-6">

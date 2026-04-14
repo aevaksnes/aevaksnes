@@ -23,6 +23,16 @@ export interface Update {
 
 export const UPDATES: Update[] = [
 
+      {
+    id: "6",
+    date: "2026-04-14",
+    title: "Offline support and logo",
+    content: "Added offline support through firebase, and also changed the logo for better contrasts. This allows users to access the app even when they don't have an internet connection, and the new logo provides better visibility and recognition for the app.",
+    category: "feature",
+    image: "images/mealplan_logo.png",
+    projectId: "mealplan",
+    tags: [TAGS.UI_DESIGN, TAGS.FIREBASE]
+  },
     {
     id: "5",
     date: "2026-04-12",
