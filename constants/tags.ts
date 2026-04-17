@@ -13,4 +13,5 @@ export const TAGS = {
     PLAYSTORE: "Google Play",
     ANDROID: "Android",
     VERCEL: "Vercel",
+    RESEND: "Resend",
 } as const;

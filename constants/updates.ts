@@ -23,7 +23,28 @@ export interface Update {
 
 export const UPDATES: Update[] = [
 
-      {
+  {
+    id: "8",
+    date: "2026-04-17",
+    title: "Updated the design of the Projects page on my homepage",
+    content: "I updated the design of the Projects page on my homepage to match the rest of the website better, and just to make it look nicer.",
+    category: "feature",
+    links: [{ label: "Visit Projects", url: "https://aevaksnes.vercel.app/updates" }],
+    projectId: "homepage",
+    tags: [TAGS.VERCEL, TAGS.NEXTJS, TAGS.UI_DESIGN]
+  },
+  {
+    id: "7",
+    date: "2026-04-17",
+    title: "Bjørns vindusvask webpage upgraded",
+    content: "Upgraded the webpage to Next.js, and moved the domain from GitHub Pages to Vercel. Created my own contact form with Resend.",
+    category: "feature",
+    links: [{ label: "Visit Bjørns Vindusvask", url: "https://bjornsvindusvask.no" }],
+    projectId: "bjorns-vindusvask",
+    tags: [TAGS.VERCEL, TAGS.NEXTJS, TAGS.RESEND]
+  },
+
+  {
     id: "6",
     date: "2026-04-14",
     title: "Offline support and logo",
@@ -33,7 +54,7 @@ export const UPDATES: Update[] = [
     projectId: "mealplan",
     tags: [TAGS.UI_DESIGN, TAGS.FIREBASE]
   },
-    {
+  {
     id: "5",
     date: "2026-04-12",
     title: "Added a project and images",
@@ -43,7 +64,7 @@ export const UPDATES: Update[] = [
     tags: [TAGS.UI_DESIGN]
   },
 
-    {
+  {
     id: "4",
     date: "2026-04-12",
     title: "Environment Variables Added",
