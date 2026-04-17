@@ -51,7 +51,7 @@ export const PROJECTS: Project[] = [
     id: "shared_kitchen",
     title: "Shared Kitchen",
     description: "A PWA designed to connect people who want to share recipes, cooking tips, and meal ideas in a collaborative online space.",
-    image: "projects/shared_kitchen_project.png",
+    image: "projects/shared_kitchen_project_v2.png",
     tags: [TAGS.PWA, TAGS.FLUTTER, TAGS.DART, TAGS.FIREBASE],
     href: "/projects/shared_kitchen",
     size: "L",
