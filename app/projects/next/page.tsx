@@ -1,109 +1,173 @@
-import { PROJECTS } from "@/constants/projects";
+"use client";
+
+import { useState, useEffect } from "react";
+import { collection, query, where, getDocs } from "firebase/firestore";
+import { db } from "@/lib/firebase";
+import { Project } from "@/types/firebase_types";
 import { ProjectWrapper } from "@/components/ProjectWrapper";
 import { ProjectUpdates } from "@/components/ProjectUpdates";
+import { ProjectDownloads } from "@/components/ProjectDowloads";
 import { notFound } from "next/navigation";
-import Link from "next/link";
-import { ListTodo, Award, Smartphone, Zap, RefreshCcw, ExternalLink } from "lucide-react";
+import { 
+  ListTodo, 
+  Award, 
+  Smartphone, 
+  Zap, 
+  RefreshCcw, 
+  ExternalLink, 
+  Loader2,
+  Code2
+} from "lucide-react";
 
-export default function Next() {
+export default function NextProject() {
+    const [project, setProject] = useState<Project | null>(null);
+    const [loading, setLoading] = useState(true);
 
-    const data = PROJECTS.find(p => p.id === "next");
-    if (!data) return notFound();
+    useEffect(() => {
+        const fetchProject = async () => {
+            try {
+                const q = query(collection(db, "projects"), where("title", "==", "Next"));
+                const snapshot = await getDocs(q);
+
+                if (!snapshot.empty) {
+                    const doc = snapshot.docs[0];
+                    setProject({ id: doc.id, ...doc.data() } as Project);
+                }
+            } catch (error) {
+                console.error("Error fetching project:", error);
+            } finally {
+                setLoading(false);
+            }
+        };
+        fetchProject();
+    }, []);
+
+    if (loading) return <div className="flex justify-center py-24"><Loader2 className="animate-spin text-brand-teal" size={40} /></div>;
+    if (!project) return notFound();
 
     return (
-        <ProjectWrapper title={data.title} tags={data.tags}>
-
-            <section className="prose dark:prose-invert max-w-none">
-                {/* Hero Section */}
-                <div className="mb-16 p-10 rounded-[2.5rem] bg-linear-to-br from-brand-purple/2 to-transparent border border-white/10">
-                    <div className="flex items-center gap-4 mb-6">
-                        <div className="w-12 h-12 rounded-2xl bg-brand-purple flex items-center justify-center text-white shadow-lg shadow-brand-purple/20">
-                            <ListTodo size={28} />
+        <ProjectWrapper title={project.title} tags={project.tags}>
+            <div className="space-y-24">
+                
+                {/* Hero Section - The Philosophy */}
+                <section>
+                    <div className="mb-12 p-12 rounded-4xl bg-linear-to-br from-brand-purple/10 to-brand-teal/5 border border-white/10 shadow-sm relative overflow-hidden">
+                        <div className="relative z-10">
+                            <p className="text-3xl md:text-4xl font-black dark:text-white mb-6 tracking-tighter leading-tight">
+                                &quot;Being all over the place is just untapped potential.&quot;
+                            </p>
+                            <p className="text-xl text-gray-600 dark:text-gray-400 leading-relaxed max-w-2xl">
+                                Next is a productivity tool built for those who love to plan but hate being locked down. 
+                                It focuses on <strong>optionality</strong>—allowing you to choose tasks based on energy and mood.
+                            </p>
                         </div>
-                        <h2 className="text-3xl font-bold m-0 dark:text-white">Next</h2>
+                        <ListTodo size={120} className="absolute -right-8 -bottom-8 opacity-5 text-brand-purple rotate-12" />
                     </div>
-                    <p className="text-xl text-gray-600 dark:text-gray-400 leading-relaxed italic">
-                        "Because being 'all over the place' is just untapped potential."
-                    </p>
-                </div>
+                </section>
 
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-12 mb-20">
-                    <div>
-                        <h2 className="text-2xl font-bold mb-4 dark:text-white">The Philosophy</h2>
-                        <p className="text-gray-600 dark:text-gray-400 mb-6 leading-relaxed">
-                            Next is a productivity tool built for those who love to plan but hate to be locked down.
-                            It focuses on <strong>optionality</strong>—allowing you to choose from a curated list
-                            of recurring tasks and projects based on your current energy and mood.
-                        </p>
-
+                <section className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-start">
+                    {/* Key Features */}
+                    <div className="space-y-8">
+                        <h3 className="text-3xl font-black tracking-tighter dark:text-white">Core Mechanics</h3>
+                        
                         <div className="space-y-4">
-                            <div className="flex gap-4 p-4 rounded-2xl bg-white dark:bg-white/5 border border-white/10">
-                                <RefreshCcw className="text-brand-teal shrink-0" size={24} />
+                            <div className="flex gap-5 p-6 rounded-3xl bg-white dark:bg-white/5 border border-gray-100 dark:border-white/10">
+                                <div className="p-3 bg-brand-teal/10 rounded-2xl text-brand-teal shrink-0 h-fit">
+                                    <RefreshCcw size={24} />
+                                </div>
                                 <div>
-                                    <h4 className="font-bold mb-1">Smart Intervals</h4>
-                                    <p className="text-sm text-gray-500">Tasks reappear at the top of your list based on custom intervals, ensuring your home and projects stay on track without rigid scheduling.</p>
+                                    <h4 className="font-bold text-lg mb-1 dark:text-white">Smart Intervals</h4>
+                                    <p className="text-sm text-gray-500 leading-relaxed">
+                                        Tasks reappear based on custom intervals, keeping projects on track without the stress of rigid deadlines.
+                                    </p>
                                 </div>
                             </div>
-                            <div className="flex gap-4 p-4 rounded-2xl bg-white dark:bg-white/5 border border-white/10">
-                                <Award className="text-yellow-500 shrink-0" size={24} />
+
+                            <div className="flex gap-5 p-6 rounded-3xl bg-white dark:bg-white/5 border border-gray-100 dark:border-white/10">
+                                <div className="p-3 bg-yellow-500/10 rounded-2xl text-yellow-500 shrink-0 h-fit">
+                                    <Award size={24} />
+                                </div>
                                 <div>
-                                    <h4 className="font-bold mb-1">Gamified Progress</h4>
-                                    <p className="text-sm text-gray-500">Earn points for every task completed, whether it's through the app directly or synced from Google Tasks.</p>
+                                    <h4 className="font-bold text-lg mb-1 dark:text-white">Gamified Progress</h4>
+                                    <p className="text-sm text-gray-500 leading-relaxed">
+                                        Earn points for every completed task, rewarding consistency across both local tasks and synced Google objectives.
+                                    </p>
                                 </div>
                             </div>
                         </div>
                     </div>
 
-                    {/* Google Tasks API - Teknisk dypdykk */}
-                    <div className="p-8 rounded-3xl bg-gray-50 dark:bg-card-bg border border-white/10 shadow-inner">
-                        <h3 className="text-xl font-bold mb-6 flex items-center gap-2">
-                            <ExternalLink className="text-blue-500" size={20} /> Google Ecosystem
-                        </h3>
-                        <p className="text-sm text-gray-600 dark:text-gray-400 mb-6">
-                            The most challenging part of this project was the integration with the <strong>Google Tasks API</strong>.
-                            Since the API has limitations (like missing time-specific stamps), I built a custom sync-logic:
+                    {/* Google Tasks API Deep Dive */}
+                    <div className="p-10 rounded-4xl bg-gray-50 dark:bg-white/5 border border-gray-100 dark:border-white/10 shadow-inner">
+                        <div className="flex items-center gap-3 mb-8">
+                            <Code2 className="text-blue-500" size={24} />
+                            <h3 className="text-xl font-bold dark:text-white tracking-tight">API Integration</h3>
+                        </div>
+                        
+                        <p className="text-sm text-gray-600 dark:text-gray-400 mb-8 leading-relaxed">
+                            The core challenge was syncing with the <strong>Google Tasks API</strong>. Since the API lacks native interval-logic, I developed a custom bridge to handle state:
                         </p>
 
-                        <div className="space-y-3 font-mono text-xs">
-                            <div className="p-3 bg-white dark:bg-black/20 rounded-xl border border-white/5">
-                                <span className="text-brand-purple">GET</span> /tasks/v1/lists/id/tasks
-                                <p className="mt-1 text-gray-500">Fetch daily objectives and sync completion status.</p>
+                        <div className="space-y-4 font-mono text-[11px]">
+                            <div className="p-4 bg-white dark:bg-black/30 rounded-2xl border border-gray-100 dark:border-white/5 shadow-sm">
+                                <div className="flex justify-between mb-2">
+                                    <span className="text-brand-purple font-bold">GET</span>
+                                    <span className="text-gray-400">/tasks/v1/lists/id</span>
+                                </div>
+                                <p className="text-gray-500">Retrieves daily objectives and cross-references completion status.</p>
                             </div>
-                            <div className="p-3 bg-white dark:bg-black/20 rounded-xl border border-white/5">
-                                <span className="text-brand-teal">POST</span> /tasks/v1/lists/id/tasks
-                                <p className="mt-1 text-gray-500">Export selected "Next" tasks into the Google ecosystem for on-the-go access.</p>
+                            <div className="p-4 bg-white dark:bg-black/30 rounded-2xl border border-gray-100 dark:border-white/5 shadow-sm">
+                                <div className="flex justify-between mb-2">
+                                    <span className="text-brand-teal font-bold">POST</span>
+                                    <span className="text-gray-400">/tasks/v1/lists/id</span>
+                                </div>
+                                <p className="text-gray-500">Exports &quot;Next&quot; items to the Google ecosystem for cloud access.</p>
                             </div>
                         </div>
 
-                        <div className="mt-8 flex items-center gap-2 text-xs text-gray-500 italic">
-                            <Zap size={14} className="text-yellow-500" />
-                            Points are awarded automatically upon sync if a task is marked done in Google.
+                        <div className="mt-8 flex items-start gap-3 p-4 rounded-2xl bg-blue-500/5 border border-blue-500/10">
+                            <Zap size={16} className="text-yellow-500 shrink-0 mt-0.5" />
+                            <p className="text-[11px] text-gray-500 italic leading-snug">
+                                Points are awarded automatically upon background sync if a task is verified as &quot;Done&quot; in the Google cloud.
+                            </p>
                         </div>
                     </div>
+                </section>
+
+                {/* Technical Overview Section */}
+                <section className="p-10 md:p-16 rounded-4xl bg-gray-900 text-white dark:bg-white dark:text-gray-900">
+                   <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
+                        <div>
+                            <h4 className="text-xs font-mono font-bold uppercase tracking-[0.2em] mb-6 opacity-60">Tech Stack</h4>
+                            <div className="flex flex-wrap gap-3">
+                                {["Flutter", "Google API", "Firebase", "Dart"].map(tech => (
+                                    <span key={tech} className="px-4 py-2 bg-white/10 dark:bg-gray-100 rounded-xl text-sm font-bold border border-white/10 dark:border-gray-200">
+                                        {tech}
+                                    </span>
+                                ))}
+                            </div>
+                        </div>
+                        <div>
+                            <h4 className="text-xs font-mono font-bold uppercase tracking-[0.2em] mb-6 opacity-60">Deployment</h4>
+                            <div className="flex items-center gap-4 text-xl font-black tracking-tighter">
+                                <Smartphone size={28} className="text-brand-teal" />
+                                Android (Private APK)
+                            </div>
+                        </div>
+                   </div>
+                </section>
+
+                {/* Resources & Logs */}
+                <div className="grid grid-cols-1 lg:grid-cols-3 gap-16">
+                    <div className="lg:col-span-2">
+                        <ProjectUpdates projectId={project.id} />
+                    </div>
+                    <aside>
+                        <ProjectDownloads projectId={project.id} />
+                    </aside>
                 </div>
 
-                {/* Status & Tech */}
-                <div className="flex flex-wrap gap-8 py-8 border-y border-white/10">
-                    <div>
-                        <h4 className="text-xs uppercase tracking-widest text-gray-500 mb-2 font-bold">Tech Stack</h4>
-                        <div className="flex gap-2">
-                            <span className="px-3 py-1 bg-brand-purple/10 text-brand-purple rounded-lg text-xs font-mono">Flutter</span>
-                            <span className="px-3 py-1 bg-blue-500/10 text-blue-500 rounded-lg text-xs font-mono">Google Tasks API</span>
-                            <span className="px-3 py-1 bg-brand-teal/10 text-brand-teal rounded-lg text-xs font-mono">Firebase</span>
-                        </div>
-                    </div>
-                    <div>
-                        <h4 className="text-xs uppercase tracking-widest text-gray-500 mb-2 font-bold">Platform</h4>
-                        <div className="flex gap-2 text-sm dark:text-white">
-                            <Smartphone size={18} /> Android (Private APK)
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-            {/* Gets updates for 'next' */}
-            <ProjectUpdates projectId={data.id} />
-
+            </div>
         </ProjectWrapper>
     );
 }

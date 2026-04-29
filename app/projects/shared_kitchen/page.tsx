@@ -1,139 +1,187 @@
-import { PROJECTS } from "@/constants/projects";
+"use client";
+
+import { useState, useEffect } from "react";
+import { collection, query, where, getDocs } from "firebase/firestore";
+import { db } from "@/lib/firebase";
+import { Project } from "@/types/firebase_types";
 import { ProjectWrapper } from "@/components/ProjectWrapper";
 import { ProjectUpdates } from "@/components/ProjectUpdates";
 import { notFound } from "next/navigation";
 import Link from "next/link";
-import { Users, Bell, MessageSquare, Cloud, Image as ImageIcon, Link as LinkIcon, ArrowRight } from "lucide-react";
+import { 
+  Users, 
+  Bell, 
+  MessageSquare, 
+  Cloud, 
+  Loader2, 
+  Link as LinkIcon, 
+  ArrowRight,
+  ShieldCheck
+} from "lucide-react";
 
 export default function SharedKitchen() {
+    const [project, setProject] = useState<Project | null>(null);
+    const [loading, setLoading] = useState(true);
 
-    const data = PROJECTS.find(p => p.id === "shared_kitchen");
-    if (!data) return notFound();
+    useEffect(() => {
+        const fetchProject = async () => {
+            try {
+                const q = query(collection(db, "projects"), where("title", "==", "Shared Kitchen"));
+                const snapshot = await getDocs(q);
+
+                if (!snapshot.empty) {
+                    const doc = snapshot.docs[0];
+                    setProject({ id: doc.id, ...doc.data() } as Project);
+                }
+            } catch (error) {
+                console.error("Error fetching project:", error);
+            } finally {
+                setLoading(false);
+            }
+        };
+        fetchProject();
+    }, []);
+
+    if (loading) return <div className="flex justify-center py-24"><Loader2 className="animate-spin text-orange-500" size={40} /></div>;
+    if (!project) return notFound();
 
     return (
-        <ProjectWrapper title={data.title} tags={data.tags}>
-
-            <section className="prose dark:prose-invert max-w-none">
-                {/* Header med fokus på samarbeid */}
-                <div className="mb-16 p-10 rounded-[2.5rem] bg-linear-to-br from-orange-500/10 to-brand-purple/10 border border-white/5">
-                    <h2 className="text-3xl font-bold mb-4 dark:text-white">The Digital Hearth</h2>
-                    <p className="text-lg text-gray-600 dark:text-gray-400 leading-relaxed">
-                        Shared Kitchen is more than just a recipe book; it's a social platform for families,
-                        roommates, and foodies. By creating private "kitchens", users can build a
-                        collaborative library of culinary inspiration.
-                    </p>
-                </div>
-
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-12 mb-20">
-                    <div>
-                        <h2 className="text-2xl font-bold mb-6 dark:text-white flex items-center gap-2">
-                            <Users className="text-orange-500" size={24} /> Community Features
+        <ProjectWrapper title={project.title} tags={project.tags}>
+            <div className="space-y-24">
+                
+                {/* Intro Section - The Digital Hearth */}
+                <section>
+                    <div className="p-12 rounded-4xl bg-linear-to-br from-orange-500/10 to-brand-purple/10 border border-white/10 shadow-sm">
+                        <h2 className="text-4xl md:text-5xl font-black mb-8 dark:text-white tracking-tighter">
+                            The Digital Hearth
                         </h2>
-                        <ul className="space-y-6 list-none pl-0">
-                            <li className="flex gap-4">
-                                <div className="w-10 h-10 rounded-xl bg-orange-500/10 flex items-center justify-center shrink-0">
-                                    <MessageSquare className="text-orange-500" size={20} />
-                                </div>
-                                <div>
-                                    <strong>Interactive Socializing:</strong> Post recipes, tips, or links, and engage with others through a threaded comment system.
-                                </div>
-                            </li>
-                            <li className="flex gap-4">
-                                <div className="w-10 h-10 rounded-xl bg-blue-500/10 flex items-center justify-center shrink-0">
-                                    <LinkIcon className="text-blue-500" size={20} />
-                                </div>
-                                <div>
-                                    <strong>Rich Content:</strong> Support for high-quality image uploads and smart link previews for external recipes.
-                                </div>
-                            </li>
-                        </ul>
-                    </div>
-
-                    {/* Teknisk boks - Cloud Functions */}
-                    <div className="p-8 rounded-3xl bg-gray-50 dark:bg-white/5 border border-white/10 shadow-inner">
-                        <h2 className="text-2xl font-bold mb-6 dark:text-white flex items-center gap-2">
-                            <Cloud className="text-brand-purple" size={24} /> Backend Logic
-                        </h2>
-                        <p className="text-sm text-gray-600 dark:text-gray-400 mb-6 italic">
-                            "This project allowed me to dive deep into the Firebase ecosystem beyond simple data storage."
+                        <p className="text-xl text-gray-600 dark:text-gray-400 leading-relaxed max-w-3xl">
+                            Shared Kitchen is a social platform built for collaborative culinary inspiration. 
+                            By creating private &quot;kitchens&quot;, families and roommates can build a 
+                            shared library of recipes and tips in real-time.
                         </p>
+                    </div>
+                </section>
+
+                {/* Features & Backend Logic Grid */}
+                <section className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
+                    <div className="space-y-8">
+                        <h3 className="text-3xl font-black tracking-tighter dark:text-white">Community Features</h3>
                         <div className="space-y-4">
-                            <div className="p-4 rounded-2xl bg-white dark:bg-black/20 border border-white/5">
-                                <div className="flex items-center gap-2 text-brand-purple font-bold text-sm mb-1">
-                                    <Bell size={16} /> Cloud Functions
+                            <div className="flex gap-5 p-6 rounded-3xl bg-white dark:bg-white/5 border border-gray-100 dark:border-white/10">
+                                <div className="p-3 bg-orange-500/10 rounded-2xl text-orange-500 shrink-0 h-fit">
+                                    <MessageSquare size={24} />
                                 </div>
-                                <p className="text-xs text-gray-500">
-                                    Custom Node.js triggers that monitor Firestore and automatically dispatch
-                                    Push Notifications to group members whenever new content is shared.
-                                </p>
+                                <div>
+                                    <h4 className="font-bold text-lg mb-1 dark:text-white">Interactive Socializing</h4>
+                                    <p className="text-sm text-gray-500 leading-relaxed">
+                                        Threaded comment systems allow users to engage with recipes through tips, questions, and shared experiences.
+                                    </p>
+                                </div>
+                            </div>
+                            <div className="flex gap-5 p-6 rounded-3xl bg-white dark:bg-white/5 border border-gray-100 dark:border-white/10">
+                                <div className="p-3 bg-blue-500/10 rounded-2xl text-blue-500 shrink-0 h-fit">
+                                    <LinkIcon size={24} />
+                                </div>
+                                <div>
+                                    <h4 className="font-bold text-lg mb-1 dark:text-white">Smart Link Previews</h4>
+                                    <p className="text-sm text-gray-500 leading-relaxed">
+                                        Metadata scraping for external recipe links, creating a visual and rich content library effortlessly.
+                                    </p>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
 
-                {/* Prosess-seksjon */}
-                <div className="mb-20">
-                    <h2 className="text-2xl font-bold mb-6 dark:text-white">How it works</h2>
-                    <div className="grid grid-cols-1 md:grid-cols-3 gap-6 text-center">
-                        <div className="p-6">
-                            <div className="text-3xl font-bold text-orange-500 mb-2">01</div>
-                            <h4 className="font-bold mb-2">Create</h4>
-                            <p className="text-sm text-gray-500">Start your own kitchen and get a unique invite code.</p>
+                    {/* Backend Deep Dive */}
+                    <div className="p-10 rounded-4xl bg-gray-50 dark:bg-white/5 border border-gray-100 dark:border-white/10">
+                        <div className="flex items-center gap-3 mb-6">
+                            <Cloud className="text-brand-purple" size={24} />
+                            <h3 className="text-xl font-bold dark:text-white tracking-tight">Cloud Infrastructure</h3>
                         </div>
-                        <div className="p-6">
-                            <div className="text-3xl font-bold text-brand-purple mb-2">02</div>
-                            <h4 className="font-bold mb-2">Invite</h4>
-                            <p className="text-sm text-gray-500">Friends join your kitchen to see and share posts.</p>
-                        </div>
-                        <div className="p-6">
-                            <div className="text-3xl font-bold text-brand-teal mb-2">03</div>
-                            <h4 className="font-bold mb-2">Share</h4>
-                            <p className="text-sm text-gray-500">Everyone stays updated through real-time notifications.</p>
-                        </div>
-                    </div>
-                </div>
-
-                {/* Footer med call-to-action */}
-                <div className="p-8 rounded-3xl border border-dashed border-orange-500/30 flex flex-col md:flex-row items-center gap-8 bg-orange-500/5">
-                    <div className="flex-1">
-                        <h3 className="text-xl font-bold mb-2">Technical Complexity</h3>
-                        <p className="text-sm text-gray-600 dark:text-gray-400 mb-0">
-                            Shared Kitchen tested my ability to manage complex state in Flutter,
-                            handle secure group-based access in Firestore, and automate workflows with backend functions.
+                        <p className="text-sm text-gray-600 dark:text-gray-400 mb-8 italic">
+                            &quot;This project pushed me to implement logic beyond the client-side, utilizing the full Firebase ecosystem.&quot;
                         </p>
+                        <div className="p-6 rounded-2xl bg-white dark:bg-black/30 border border-gray-100 dark:border-white/5">
+                            <div className="flex items-center gap-2 text-brand-purple font-bold text-sm mb-3">
+                                <Bell size={18} /> Cloud Functions
+                            </div>
+                            <p className="text-sm text-gray-500 leading-relaxed">
+                                Custom Node.js triggers monitor Firestore events to dispatch **Push Notifications** automatically when group members share new content or comments.
+                            </p>
+                        </div>
+                    </div>
+                </section>
+
+                {/* Workflow Section */}
+                <section>
+                    <h3 className="text-3xl font-black tracking-tighter dark:text-white mb-12 text-center">How it works</h3>
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
+                        {[
+                            { step: "01", title: "Create", desc: "Start a private kitchen and generate a unique invite code.", color: "text-orange-500" },
+                            { step: "02", title: "Invite", desc: "Share the code with friends or family to grant secure access.", color: "text-brand-purple" },
+                            { step: "03", title: "Share", desc: "Everyone stays synchronized through real-time database updates.", color: "text-brand-teal" }
+                        ].map((item, i) => (
+                            <div key={i} className="text-center group">
+                                <div className={`text-4xl font-black ${item.color} mb-4 transition-transform group-hover:scale-110 duration-300`}>
+                                    {item.step}
+                                </div>
+                                <h4 className="font-bold text-xl mb-3 dark:text-white">{item.title}</h4>
+                                <p className="text-gray-500 text-sm leading-relaxed">{item.desc}</p>
+                            </div>
+                        ))}
+                    </div>
+                </section>
+
+                {/* Technical Complexity Callout */}
+                <section className="p-10 rounded-4xl border border-dashed border-orange-500/30 bg-orange-500/5">
+                    <div className="flex flex-col md:flex-row items-start gap-8">
+                        <div className="p-4 bg-orange-500/10 rounded-2xl text-orange-500">
+                            <ShieldCheck size={32} />
+                        </div>
+                        <div>
+                            <h3 className="text-2xl font-bold mb-4 tracking-tight">Technical Complexity</h3>
+                            <p className="text-gray-600 dark:text-gray-400 leading-relaxed">
+                                Building this app required advanced management of **Group-Based Access Control** in Firestore. 
+                                Ensuring that only invited members could read or write to specific kitchen collections was a 
+                                critical exercise in backend security and data modeling.
+                            </p>
+                        </div>
+                    </div>
+                </section>
+
+                {/* Main Action / Launch Section */}
+                <section className="flex flex-col items-center p-12 rounded-4xl bg-white dark:bg-white/5 border border-gray-100 dark:border-white/10 shadow-2xl relative overflow-hidden">
+                    <div className="absolute top-0 left-0 w-full h-1 bg-linear-to-r from-orange-500 via-brand-purple to-brand-teal" />
+                    
+                    <div className="mb-8 w-20 h-20 rounded-3xl bg-orange-500/10 flex items-center justify-center">
+                        <Users className="text-orange-500" size={40} />
                     </div>
 
-                </div>
-                {/* Live Link Section */}
-                <div className="mt-16 flex flex-col items-center p-10 rounded-[2.5rem] bg-white dark:bg-white/5 border border-white/10 shadow-2xl">
-                    <div className="mb-6 w-16 h-16 rounded-2xl bg-orange-500/20 flex items-center justify-center">
-                        <Users className="text-orange-500" size={32} />
-                    </div>
-
-                    <h3 className="text-2xl font-bold mb-2 text-center">Ready to cook together?</h3>
-                    <p className="text-gray-500 dark:text-gray-400 text-center max-w-md mb-8">
-                        The app is live and fully functional. Create your own private kitchen or join one with an invite code.
+                    <h3 className="text-3xl font-black mb-4 text-center tracking-tighter dark:text-white">Ready to cook together?</h3>
+                    <p className="text-gray-500 dark:text-gray-400 text-center max-w-lg mb-10 text-lg">
+                        The app is live and fully functional. Create your own private kitchen or join an existing one to start sharing.
                     </p>
 
-                    <div className="flex flex-col sm:flex-row gap-4 w-full justify-center">
+                    <div className="flex flex-col sm:flex-row gap-4 w-full max-w-md justify-center">
                         <Link
                             href="https://aevaksnes-shared-kitchen.web.app"
                             target="_blank"
-                            className="flex items-center justify-center gap-2 px-8 py-4 bg-orange-500 text-white rounded-2xl font-bold transition-all hover:scale-105 hover:bg-orange-600 shadow-lg shadow-orange-500/20"
+                            className="flex items-center justify-center gap-3 px-10 py-5 bg-orange-500 text-white rounded-2xl font-bold transition-all hover:scale-105 hover:bg-orange-600 shadow-xl shadow-orange-500/30"
                         >
                             Open Shared Kitchen
-                            <ArrowRight size={18} />
+                            <ArrowRight size={20} />
                         </Link>
                     </div>
 
-                    <p className="mt-6 text-[10px] uppercase tracking-widest text-gray-500 font-mono">
+                    <p className="mt-8 text-[11px] font-mono font-bold uppercase tracking-[0.25em] text-gray-400">
                         Built with Flutter & Firebase Hosting
                     </p>
-                </div>
-            </section>
-            {/* Gets updates for 'shared_kitchen' */}
-            <ProjectUpdates projectId={data.id} />
+                </section>
 
+                {/* Project Log */}
+                <ProjectUpdates projectId={project.id} />
+            </div>
         </ProjectWrapper>
     );
 }

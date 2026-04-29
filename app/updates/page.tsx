@@ -1,64 +1,78 @@
-import { UPDATES, CATEGORY_STYLES } from "@/constants/updates";
-import Date from "@/components/SmartDate";
+"use client";
 
+import { useState, useEffect } from "react";
+import { collection, getDocs, query, orderBy } from "firebase/firestore";
+import { db } from "@/lib/firebase";
+import { Update } from "@/types/firebase_types";
+import { Loader2 } from "lucide-react";
+import { UpdateCard } from "@/components/UpdateCard";
 
+/**
+ * Main Updates Page
+ * Uses the shared UpdateCard to display a global feed of all project activities.
+ */
+export default function UpdatesPage() {
+  const [updates, setUpdates] = useState<Update[]>([]);
+  const [loading, setLoading] = useState(true);
 
-export default function Updates() {
+  useEffect(() => {
+    const fetchUpdates = async () => {
+      try {
+        const q = query(collection(db, "updates"), orderBy("date", "desc"));
+        const snapshot = await getDocs(q);
+        const data = snapshot.docs.map(doc => ({
+          id: doc.id,
+          ...doc.data()
+        })) as Update[];
+        setUpdates(data);
+      } catch (error) {
+        console.error("Error fetching global updates:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchUpdates();
+  }, []);
+
+  if (loading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <Loader2 className="animate-spin text-brand-purple" size={48} />
+      </div>
+    );
+  }
+
   return (
-    <div className="max-w-3xl mx-auto py-20 px-6">
-      <h1 className="text-4xl font-bold mb-16 dark:text-white">Updates</h1>
+    <div className="max-w-4xl mx-auto py-24 px-6 animate-in fade-in duration-700">
 
-      <div className="space-y-0"> {/* We use padding instead of gap to keep the line intact */}
-        {UPDATES.map((update, index) => (
-          <div key={update.id} className="flex gap-6 md:gap-10 group">
+      {/* Page Header */}
+      <header className="mb-24">
+        <h1 className="text-5xl md:text-7xl font-black mb-6 dark:text-white tracking-tighter">
+          Updates
+        </h1>
+        <p className="text-xl text-gray-600 dark:text-gray-400 max-w-2xl leading-relaxed">
+          A technical log of my progress, features, and experiments.
+          Documenting the journey of building digital tools.
+        </p>
+      </header>
 
-            {/* Timeline */}
-            <div className="flex flex-col items-center">
-              <div className={`w-4 h-4 rounded-full mt-1.5 shrink-0 ${CATEGORY_STYLES[update.category]}`} />
-              {index !== UPDATES.length - 1 && (
-                <div className="w-1 h-full bg-gray-200 dark:bg-white/10 my-2 rounded-full" />
-              )}
-            </div>
-
-            {/* Content Column */}
-            <div className="pb-16 flex-1">
-              <time className="font-mono text-sm text-gray-500 dark:text-gray-400 uppercase tracking-tighter">
-                <Date dateString={update.date} />
-              </time>
-
-              <h2 className="text-2xl font-bold mt-2 mb-4 dark:text-white group-hover:text-brand-purple transition-colors">
-                {update.title}
-              </h2>
-
-              <p className="text-gray-600 dark:text-gray-300 leading-relaxed">
-                {update.content}
-              </p>
-
-              {update.image && (
-                <div className="mt-8 flex justify-start"> {/* Flex sørger for at den ikke tvinges til full bredde */}
-                  <div className="relative max-w-sm w-full rounded-2xl overflow-hidden border border-gray-100 dark:border-white/10 shadow-sm bg-gray-50 dark:bg-white/5">
-                    <img
-                      src={update.image}
-                      alt={update.title}
-                      className="w-full h-auto object-contain transition-transform duration-500 hover:scale-[1.02]"
-                    />
-                  </div>
-                </div>
-              )}
-
-              {update.links && (
-                <div className="mt-4 flex gap-4">
-                  {update.links.map(link => (
-                    <a key={link.url} href={link.url} className="text-sm font-bold text-brand-teal hover:underline">
-                      {link.label} →
-                    </a>
-                  ))}
-                </div>
-              )}
-            </div>
-          </div>
+      {/* Global Feed */}
+      <div className="space-y-0">
+        {updates.map((update, index) => (
+          <UpdateCard
+            key={update.id}
+            update={update}
+            isLast={index === updates.length - 1}
+            showProjectTitle={true} 
+          />
         ))}
       </div>
+
+      {updates.length === 0 && (
+        <div className="py-20 text-center rounded-4xl border-2 border-dashed border-gray-100 dark:border-white/5">
+          <p className="text-gray-500 italic">No logs found. Stay tuned for more.</p>
+        </div>
+      )}
     </div>
   );
 }

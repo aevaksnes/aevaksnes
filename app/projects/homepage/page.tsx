@@ -1,89 +1,133 @@
-import { PROJECTS } from "@/constants/projects";
+"use client";
+
+import { useState, useEffect } from "react";
+import { collection, query, where, getDocs } from "firebase/firestore";
+import { db } from "@/lib/firebase";
+import { Project } from "@/types/firebase_types";
 import { ProjectWrapper } from "@/components/ProjectWrapper";
 import { ProjectUpdates } from "@/components/ProjectUpdates";
 import { notFound } from "next/navigation";
 import Link from "next/link";
-import { Github, Zap, ShieldCheck, RefreshCw } from "lucide-react";
+import { Github, Zap, ShieldCheck, RefreshCw, Loader2, Layout } from "lucide-react";
 
 export default function Homepage() {
+    const [project, setProject] = useState<Project | null>(null);
+    const [loading, setLoading] = useState(true);
 
-    const data = PROJECTS.find(p => p.id === "homepage");
-    if (!data) return notFound();
+    useEffect(() => {
+        const fetchProject = async () => {
+            try {
+                const q = query(collection(db, "projects"), where("title", "==", "My Homepage"));
+                const snapshot = await getDocs(q);
+
+                if (!snapshot.empty) {
+                    const doc = snapshot.docs[0];
+                    setProject({ id: doc.id, ...doc.data() } as Project);
+                }
+            } catch (error) {
+                console.error("Error fetching project:", error);
+            } finally {
+                setLoading(false);
+            }
+        };
+
+        fetchProject();
+    }, []);
+
+    if (loading) return <div className="flex justify-center py-24"><Loader2 className="animate-spin text-brand-teal" size={40} /></div>;
+    if (!project) return notFound();
 
     return (
-        <ProjectWrapper title={data.title} tags={data.tags}>
-
-            <section className="prose dark:prose-invert max-w-none">
-                <h2 className="text-2xl font-bold mb-4 dark:text-white">A Continuous Evolution</h2>
-                <p className="text-lg text-gray-600 dark:text-gray-400 mb-8 leading-relaxed">
-                    {data.description}
-                </p>
-
-                {/* Arkitektur-skifte-boks */}
-                <div className="bg-linear-to-r from-brand-purple/5 to-brand-teal/5 border border-white/10 rounded-3xl p-8 mb-12">
-                    <h3 className="text-xl font-bold mb-4 flex items-center gap-2">
-                        <RefreshCw className="text-brand-purple animate-spin-slow" size={20} />
-                        The Great Migration
-                    </h3>
-                    <p className="text-sm text-gray-600 dark:text-gray-400 mb-4">
-                        This project recently underwent a major architectural shift. Originally built as a static site
-                        for GitHub Pages, it was migrated to <strong>Next.js on Vercel</strong> to unlock full-stack
-                        capabilities and superior image optimization.
+        <ProjectWrapper title={project.title} tags={project.tags}>
+            <div className="space-y-20">
+                
+                {/* Intro Section */}
+                <section>
+                    <h2 className="text-4xl md:text-5xl font-black mb-8 dark:text-white tracking-tighter italic">
+                        A Continuous Evolution
+                    </h2>
+                    <p className="text-xl text-gray-600 dark:text-gray-400 leading-relaxed max-w-3xl">
+                        {project.description}
                     </p>
-                    <div className="flex flex-wrap gap-4 mt-4">
-                        <div className="flex items-center gap-2 text-xs font-mono bg-white dark:bg-white/5 px-3 py-1 rounded-full border border-white/10">
-                            <Github size={14} /> GitHub Pages (Old)
+                </section>
+
+                {/* The Great Migration - Visual Box */}
+                <section className="bg-linear-to-br from-brand-purple/5 to-brand-teal/5 border border-gray-100 dark:border-white/10 rounded-4xl p-10">
+                    <div className="flex items-center gap-3 mb-6">
+                        <div className="p-2 bg-brand-purple/10 rounded-lg text-brand-purple">
+                            <RefreshCw size={24} className="animate-spin-slow" />
                         </div>
-                        <div className="flex items-center gap-2 text-xs font-mono bg-brand-teal/20 text-brand-teal px-3 py-1 rounded-full border border-brand-teal/20">
-                            <Zap size={14} /> Vercel (Current)
+                        <h3 className="text-2xl font-bold dark:text-white tracking-tight">The Architecture Shift</h3>
+                    </div>
+                    
+                    <p className="text-gray-600 dark:text-gray-400 leading-relaxed mb-8">
+                        To unlock modern features like dynamic routing and image optimization, this site was migrated from a simple static setup to a full-scale <strong>Next.js</strong> application deployed on <strong>Vercel</strong>.
+                    </p>
+
+                    <div className="flex flex-wrap items-center gap-4">
+                        <div className="flex items-center gap-3 text-xs font-mono font-bold bg-white dark:bg-white/5 px-4 py-2 rounded-xl border border-gray-100 dark:border-white/10 text-gray-400">
+                            <Github size={16} /> GitHub Pages (Legacy)
+                        </div>
+                        <div className="h-px w-8 bg-gray-200 dark:bg-white/10 hidden sm:block" />
+                        <div className="flex items-center gap-3 text-xs font-mono font-bold bg-brand-teal/10 text-brand-teal px-4 py-2 rounded-xl border border-brand-teal/20">
+                            <Zap size={16} /> Vercel & Next.js (Current)
                         </div>
                     </div>
-                </div>
+                </section>
 
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-16">
-                    <div>
-                        <h2 className="text-2xl font-bold mb-4 dark:text-white">Technical Highlights</h2>
-                        <ul className="space-y-4 list-none pl-0">
-                            <li className="flex gap-3">
-                                <ShieldCheck className="text-brand-teal shrink-0" size={20} />
-                                <span><strong>Secure & Modern:</strong> Updated to the latest Next.js versions with zero vulnerabilities.</span>
+                {/* Tech Highlights & Focus */}
+                <section className="grid grid-cols-1 md:grid-cols-2 gap-12">
+                    <div className="space-y-6">
+                        <h3 className="text-2xl font-bold dark:text-white tracking-tight">Technical Highlights</h3>
+                        <ul className="space-y-6">
+                            <li className="flex gap-4">
+                                <div className="mt-1 p-1 bg-green-500/10 rounded text-green-500 shrink-0">
+                                    <ShieldCheck size={18} />
+                                </div>
+                                <span className="text-gray-600 dark:text-gray-400">
+                                    <strong>Secure & Modern:</strong> Maintained with the latest dependencies and zero known vulnerabilities.
+                                </span>
                             </li>
-                            <li className="flex gap-3">
-                                <Zap className="text-brand-purple shrink-0" size={20} />
-                                <span><strong>Performance:</strong> Leveraging Vercel's Edge Network for global speed.</span>
+                            <li className="flex gap-4">
+                                <div className="mt-1 p-1 bg-brand-purple/10 rounded text-brand-purple shrink-0">
+                                    <Layout size={18} />
+                                </div>
+                                <span className="text-gray-600 dark:text-gray-400">
+                                    <strong>Bento Grid UX:</strong> Implementation of a responsive, custom-built grid system for project showcasing.
+                                </span>
                             </li>
                         </ul>
                     </div>
 
-                    <div className="p-6 rounded-2xl bg-gray-50 dark:bg-white/5 border border-white/10">
-                        <h3 className="text-lg font-bold mb-2">Current Focus</h3>
-                        <p className="text-sm text-gray-600 dark:text-gray-400">
-                            Right now, I am refining the <strong>Bento-grid</strong> layout and perfecting the
-                            dark mode experience. The content is added iteratively as I document my journey
-                            back into full-time programming.
+                    <div className="p-8 rounded-4xl bg-gray-50 dark:bg-white/5 border border-gray-100 dark:border-white/10">
+                        <h3 className="text-xl font-bold mb-4 dark:text-white">Current Refinements</h3>
+                        <p className="text-gray-600 dark:text-gray-400 leading-relaxed text-sm">
+                            Focus is currently on optimizing the <strong>Dark Mode</strong> experience and perfecting the 
+                            transition animations. This portfolio serves as a living document of my return to 
+                            full-stack development.
                         </p>
                     </div>
-                </div>
+                </section>
 
-                <div className="flex flex-col sm:flex-row items-center gap-6 p-8 rounded-3xl border border-dashed border-white/20">
-                    <div className="flex-1">
-                        <h3 className="text-xl font-bold mb-1">Open Source</h3>
-                        <p className="text-sm text-gray-500 mb-0">You can follow the development and see the code on GitHub.</p>
+                {/* Open Source CTA */}
+                <section className="flex flex-col md:flex-row items-center gap-8 p-10 rounded-4xl bg-gray-900 text-white dark:bg-white dark:text-gray-900 transition-all">
+                    <div className="flex-1 text-center md:text-left">
+                        <h3 className="text-2xl font-black tracking-tighter mb-2">Open Source</h3>
+                        <p className="opacity-70 text-sm">Explore the source code and documentation on GitHub.</p>
                     </div>
                     <Link
                         href="https://github.com/aevaksnes"
                         target="_blank"
-                        className="flex items-center gap-2 px-6 py-3 bg-black dark:bg-white dark:text-black text-white rounded-2xl font-bold transition-transform hover:scale-105"
+                        className="flex items-center gap-3 px-8 py-4 bg-white text-gray-900 dark:bg-gray-900 dark:text-white rounded-2xl font-bold transition-transform hover:scale-105 shadow-xl"
                     >
                         <Github size={20} />
                         View Repository
                     </Link>
-                </div>
-            </section>
+                </section>
 
-            {/* Gets updates for 'homepage' */}
-            <ProjectUpdates projectId={data.id} />
-
+                {/* Project Log */}
+                <ProjectUpdates projectId={project.id} />
+            </div>
         </ProjectWrapper>
     );
 }

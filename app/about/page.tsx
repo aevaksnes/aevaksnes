@@ -1,107 +1,134 @@
-import { TAGS } from "@/constants/tags";
-import Image from "next/image";
+"use client";
 
+import { useState, useEffect } from "react";
+import { collection, getDocs, orderBy, query } from "firebase/firestore";
+import { db } from "@/lib/firebase";
+import Image from "next/image";
+import { Loader2 } from "lucide-react";
+
+/**
+ * About page sharing the story behind the developer and the technical stack.
+ */
 export default function About() {
+  const [tags, setTags] = useState<string[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchTags = async () => {
+      try {
+        // Fetching technical tags from the 'tags' collection, sorted alphabetically
+        const tagsRef = collection(db, "tags");
+        const q = query(tagsRef, orderBy("name", "asc"));
+        const snapshot = await getDocs(q);
+
+        const tagList = snapshot.docs.map(doc => doc.data().name);
+        setTags(tagList);
+      } catch (error) {
+        console.error("Error fetching tags:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchTags();
+  }, []);
+
   return (
-    <div className="max-w-4xl mx-auto py-20 px-6">
-      {/* Intro Section */}
+    <div className="max-w-4xl mx-auto py-24 px-6">
+      
+      {/* Intro Section: The Story */}
       <section className="grid grid-cols-1 md:grid-cols-2 gap-16 items-start mb-32">
         <div>
-          <h1 className="text-5xl font-bold mb-8 dark:text-white tracking-tight">My Journey</h1>
+          <h1 className="text-5xl font-black mb-8 dark:text-white tracking-tighter">My Journey</h1>
 
           <div className="space-y-6 text-lg text-gray-600 dark:text-gray-400 leading-relaxed">
             <p>
-              My name is <span className="text-black dark:text-white font-medium">Eva</span>.
-              I’m a 46-year-old developer with a background in both
-              <span className="bg-brand-purple/10 text-brand-purple px-1 rounded">economics and code</span>.
+              My name is <span className="text-black dark:text-white font-bold">Eva</span>.
+              I’m a hobby developer with a background in both 
+              <span className="bg-brand-purple/10 text-brand-purple px-2 py-0.5 rounded-lg font-medium mx-1">economics and code</span>.
             </p>
 
             <p>
-              My journey started in high school with Basic computer science. In college, I studied economics and computer science.
-              I always loved the <strong>problem-solving aspect</strong> of programming and spent a few years as a developer for ERP-systems like Axapta (Dynamics 365).
+              My path started with basic computer science in high school, followed by a degree in economics and computer science. 
+              I’ve always been driven by the <strong>problem-solving aspect</strong> of programming, and spent a few years programming in Axapta (Dynamics 365).
             </p>
 
-            <p className="italic border-l-2 border-brand-purple/30 pl-4 py-1">
-              "Life happened, and I spent years focusing on family and accounting, but the itch to
-              build something from scratch never truly went away."
+            <p className="italic border-l-4 border-brand-purple/30 pl-6 py-2 text-gray-500 dark:text-gray-300 bg-gray-50/50 dark:bg-white/5 rounded-r-xl">
+              &quot;Life happened, and I spent some years focusing on family and accounting, but the itch to 
+              build something from scratch never truly went away.&quot;
             </p>
 
             <p>
-              Now, I’m diving back into <strong>modern technologies</strong>, bringing years of experience
-              and a fresh passion for creating tools that actually help people.
+              Now, I’m diving back into <strong>modern technologies</strong>, enjoying learning new things, building my own projects and solving real life challenges with coding.
             </p>
           </div>
         </div>
 
-        {/* Profile Image with "Bento" styling */}
-        <div className="relative group">
-          <div className="absolute -inset-1 bg-linear-to-r from-brand-purple to-blue-500 rounded-4xl blur opacity-25 group-hover:opacity-50 transition duration-1000"></div>
-          <div className="relative h-112.5 w-full rounded-3xl overflow-hidden bg-gray-100 dark:bg-card-bg border border-white/10 shadow-2xl">
+        {/* Profile Image with Glow Effect */}
+        <div className="relative group mx-auto md:mx-0 w-full max-w-sm">
+          <div className="absolute -inset-1 bg-linear-to-r from-brand-purple to-brand-teal rounded-4xl blur opacity-20 group-hover:opacity-40 transition duration-1000"></div>
+          <div className="relative aspect-4/5 rounded-4xl overflow-hidden bg-gray-100 dark:bg-white/5 border border-white/10 shadow-2xl">
             <Image
               src="/programming.jpg"
-              alt="Eva at work"
+              alt="Eva working on code"
               fill
-              className="object-cover transition transform duration-500 group-hover:scale-105"
+              className="object-cover transition transform duration-700 group-hover:scale-105"
+              priority
             />
           </div>
         </div>
       </section>
 
-      {/* Tech Stack Section */}
-      <section className="mb-32 p-12 rounded-[2.5rem] bg-gray-50 dark:bg-white/5 border border-gray-100 dark:border-white/10">
+      {/* Tech Stack Section: Dynamically loaded from Firestore */}
+      <section className="mb-32 p-8 md:p-16 rounded-4xl bg-gray-50 dark:bg-white/5 border border-gray-100 dark:border-white/10">
         <div className="text-center mb-12">
           <h2 className="text-3xl font-bold mb-4 dark:text-white">Technical Toolkit</h2>
-          <p className="text-gray-500">The languages and frameworks I use to bring ideas to life.</p>
+          <p className="text-gray-500 dark:text-gray-400">The languages and frameworks I use to bring ideas to life.</p>
         </div>
-        <div className="flex flex-wrap justify-center gap-4">
-          {Object.values(TAGS).map((tag) => (
-            <span
-              key={tag}
-              className="px-6 py-3 rounded-2xl bg-white dark:bg-white/5 border border-gray-200 dark:border-white/10 text-gray-700 dark:text-gray-300 font-medium shadow-sm hover:border-brand-purple/50 transition-colors"
-            >
-              {tag}
-            </span>
-          ))}
-        </div>
+
+        {loading ? (
+          <div className="flex justify-center">
+            <Loader2 className="animate-spin text-brand-purple" size={32} />
+          </div>
+        ) : (
+          <div className="flex flex-wrap justify-center gap-3">
+            {tags.map((tag) => (
+              <span
+                key={tag}
+                className="px-6 py-3 rounded-2xl bg-white dark:bg-white/10 border border-gray-200 dark:border-white/10 text-gray-700 dark:text-gray-200 font-semibold shadow-sm hover:border-brand-purple/50 transition-all hover:-translate-y-1"
+              >
+                {tag}
+              </span>
+            ))}
+          </div>
+        )}
       </section>
 
-      {/* Philosophy Section */}
-      <section className="grid grid-cols-1 md:grid-cols-3 gap-8">
-        <div className="md:col-span-2 space-y-6">
-          <h3 className="text-2xl font-bold dark:text-white">From Idea to Impact</h3>
-          <p className="text-lg text-gray-600 dark:text-gray-400 leading-relaxed">
-            Take <span className="text-black dark:text-white font-semibold italic">Braindump</span>, for example.
-            It started with a need to clear the mental clutter that keeps us awake at night.
-          </p>
+      {/* Philosophy & Hobbies */}
+      <section className="grid grid-cols-1 md:grid-cols-2 gap-12 items-start">
+        <div className="space-y-6 p-8 rounded-4xl bg-brand-teal/5 border border-brand-teal/10">
+          <h3 className="text-2xl font-bold dark:text-white tracking-tight">Why I Build</h3>
           <p className="text-gray-600 dark:text-gray-400 leading-relaxed">
-            Building it taught me that development isn't just about syntax—it's about <strong>meeting a need</strong>.
-            Understanding the user’s peace of mind is just as important as the state management of the app.
+            I’m drawn to projects that bridge the gap between <strong>logic and daily life</strong>. 
+            Whether it’s automating a business process or building a mindful log, 
+            my goal is to use my skills to build something that matters.
+          </p>
+        </div>
+
+        <div className="space-y-6 p-8">
+          <h3 className="text-2xl font-bold dark:text-white tracking-tight">Beyond the code</h3>
+          <p className="text-gray-600 dark:text-gray-400 leading-relaxed">
+            When I&apos;m not in VS Code, you&apos;ll likely find me at the gym where I work as a fitness instructor, 
+            organizing life (yes, I have an app for that), or enjoying the balance of family life in Stavanger.
           </p>
         </div>
       </section>
 
-      <section className="mt-24 grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
-        <div className="p-8 rounded-3xl bg-brand-teal/5 border border-brand-teal/10">
-          <h3 className="text-xl font-bold mb-4 dark:text-white">Why I Build</h3>
-          <p className="text-gray-600 dark:text-gray-400">
-            I’m drawn to projects that bridge the gap between <strong>logic and daily life</strong>.
-            Whether it’s automating a family business or building a mindful photo log,
-            my goal is always the same: to reduce mental load and create space for what matters.
-          </p>
-        </div>
-
-        <div className="space-y-4">
-          <h3 className="text-xl font-bold dark:text-white font-mono uppercase tracking-widest">Beyond the code</h3>
-          <p className="text-gray-600 dark:text-gray-400">
-            When I'm not in VS Code, you'll likely find me at the gym where I work as a fitness instructor, organizing projects (yes, I have an app for that),
-            or enjoying the balance of family life in Stavanger.
-          </p>
-        </div>
-      </section>
-
-      {/* Oppdatert Sitat-boks helt nederst */}
-      <div className="mt-24 h-full min-h-32 rounded-3xl bg-linear-to-r from-brand-purple/10 to-brand-teal/10 border border-white/5 flex items-center justify-center p-8 text-center italic text-lg text-gray-500 dark:text-gray-300">
-        "Complexity is easy. Simplicity is where the real work begins."
+      {/* Closing Quote */}
+      <div className="mt-32 rounded-4xl bg-linear-to-r from-brand-purple/10 to-brand-teal/10 border border-white/10 p-12 text-center">
+        <p className="italic text-xl text-gray-700 dark:text-gray-200 font-medium leading-relaxed">
+          &quot;Complexity is easy. Simplicity is where the real work begins.&quot;
+        </p>
       </div>
 
     </div>

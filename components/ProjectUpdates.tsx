@@ -1,58 +1,69 @@
-import { UPDATES, CATEGORY_STYLES} from "@/constants/updates";
-import SmartDate from "./SmartDate";
+"use client";
 
+import { useState, useEffect } from "react";
+import { collection, getDocs, query, orderBy, where } from "firebase/firestore";
+import { db } from "@/lib/firebase";
+import { Update } from "@/types/firebase_types";
+import { Loader2, History } from "lucide-react";
+import { UpdateCard } from "./UpdateCard";
+
+/**
+ * Renders a vertical timeline of updates for a specific project.
+ */
 export function ProjectUpdates({ projectId }: { projectId: string }) {
-  const related = UPDATES.filter(u => u.projectId === projectId);
-  if (related.length === 0) return null;
+  const [updates, setUpdates] = useState<Update[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchUpdates = async () => {
+      try {
+        const q = query(
+          collection(db, "updates"),
+          where("projectId", "==", projectId),
+          orderBy("date", "desc")
+        );
+        const snapshot = await getDocs(q);
+        const data = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() })) as Update[];
+        setUpdates(data);
+      } catch (error) {
+        console.error("Error fetching updates:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchUpdates();
+  }, [projectId]);
+
+  if (loading) return (
+    <div className="flex justify-center py-12">
+      <Loader2 className="animate-spin text-brand-teal" size={32} />
+    </div>
+  );
+
+  if (updates.length === 0) return null;
 
   return (
-    <section className="mt-20 pt-10 border-t border-gray-100 dark:border-white/10">
-      <h2 className="text-2xl font-bold mb-8">Updates</h2>
-      <div className="space-y-0"> {/* We use padding instead of gap to keep the line intact */}
-              {related.map((update, index) => (
-                <div key={update.id} className="flex gap-6 md:gap-10 group">
-                  
-                  {/* Timeline */}
-                  <div className="flex flex-col items-center">
-                    <div className={`w-4 h-4 rounded-full mt-1.5 shrink-0 ${CATEGORY_STYLES[update.category]}`} />
-                    {index !== UPDATES.length - 1 && (
-                      <div className="w-1 h-full bg-gray-200 dark:bg-white/10 my-2 rounded-full" />
-                    )}
-                  </div>
-      
-                  {/* Content Column */}
-                  <div className="pb-16 flex-1">
-                    <time className="font-mono text-sm text-gray-500 dark:text-gray-400 uppercase tracking-tighter">
-                      <SmartDate dateString={update.date} />
-                    </time>
-                    
-                    <h2 className="text-2xl font-bold mt-2 mb-4 dark:text-white group-hover:text-brand-purple transition-colors">
-                      {update.title}
-                    </h2>
-                    
-                    <p className="text-gray-600 dark:text-gray-300 leading-relaxed">
-                      {update.content}
-                    </p>
-      
-                    {update.image && (
-                      <div className="mt-6 rounded-2xl overflow-hidden border border-gray-100 dark:border-white/5">
-                        <img src={update.image} alt="" className="w-full h-auto opacity-90 hover:opacity-100 transition-opacity" />
-                      </div>
-                    )}
-      
-                    {update.links && (
-                      <div className="mt-4 flex gap-4">
-                        {update.links.map(link => (
-                          <a key={link.url} href={link.url} className="text-sm font-bold text-brand-teal hover:underline">
-                            {link.label} →
-                          </a>
-                        ))}
-                      </div>
-                    )}
-                  </div>
-                </div>
-              ))}
-            </div>
+    <section className="mt-32 pt-16 border-t border-gray-100 dark:border-white/10">
+      <div className="flex items-center gap-3 mb-16">
+        <div className="p-2 bg-brand-purple/10 rounded-lg text-brand-purple">
+          <History size={24} />
+        </div>
+        <h2 className="text-4xl font-black dark:text-white tracking-tighter">
+          Project Updates
+        </h2>
+      </div>
+
+      {/* Timeline of Updates for this Project */}
+      <div className="max-w-3xl">
+        {updates.map((update, index) => (
+          <UpdateCard
+            key={update.id}
+            update={update}
+            isLast={index === updates.length - 1}
+            showProjectTitle={false}
+          />
+        ))}
+      </div>
     </section>
   );
 }
