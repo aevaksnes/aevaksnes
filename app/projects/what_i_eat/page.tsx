@@ -44,7 +44,7 @@ export default function WhatIEat() {
                 {/* Hero Section */}
                 <section className="grid grid-cols-1 md:grid-cols-2 gap-16 items-center">
                     <div className="relative group order-2 md:order-1">
-                        <div className="absolute -inset-1 bg-gradient-to-r from-orange-400 to-yellow-500 rounded-4xl blur opacity-20 group-hover:opacity-40 transition duration-1000"></div>
+                        <div className="absolute -inset-1 bg-linear-to-r from-orange-400 to-yellow-500 rounded-4xl blur opacity-20 group-hover:opacity-40 transition duration-1000"></div>
                         <div className="relative aspect-square w-full rounded-4xl overflow-hidden bg-white dark:bg-white/5 border border-gray-100 dark:border-white/10 shadow-2xl flex items-center justify-center p-8">
                             <Image
                                 src="/projects/What_I_Eat_Splash.png"
