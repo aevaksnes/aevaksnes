@@ -44,22 +44,22 @@ export default function About() {
           <div className="space-y-6 text-lg text-gray-600 dark:text-gray-400 leading-relaxed">
             <p>
               My name is <span className="text-black dark:text-white font-bold">Eva</span>.
-              I’m a hobby developer with a background in both 
+              I’m a hobby developer with a background in  
               <span className="bg-brand-purple/10 text-brand-purple px-2 py-0.5 rounded-lg font-medium mx-1">economics and code</span>.
             </p>
 
             <p>
-              My path started with basic computer science in high school, followed by a degree in economics and computer science. 
-              I’ve always been driven by the <strong>problem-solving aspect</strong> of programming, and spent a few years programming in Axapta (Dynamics 365).
+              I started with basic computer science in high school, followed by a degree in economics and computer science. 
+              I’ve always loved the <strong>problem-solving aspect</strong> of programming, and worked for a few years as a programmer in Axapta (Dynamics 365).
             </p>
 
             <p className="italic border-l-4 border-brand-purple/30 pl-6 py-2 text-gray-500 dark:text-gray-300 bg-gray-50/50 dark:bg-white/5 rounded-r-xl">
-              &quot;Life happened, and I spent some years focusing on family and accounting, but the itch to 
-              build something from scratch never truly went away.&quot;
+              &quot;Life happened, and I spent some years focusing on family while working with accounting, but the itch to 
+              build something with code never truly went away.&quot;
             </p>
 
             <p>
-              Now, I’m diving back into <strong>modern technologies</strong>, enjoying learning new things, building my own projects and solving real life challenges with coding.
+              Now, I’m diving back into software development, exploring <strong>modern technologies</strong>, enjoying learning new things, building my own projects and using code to ease real-world friction.
             </p>
           </div>
         </div>
@@ -111,7 +111,7 @@ export default function About() {
           <p className="text-gray-600 dark:text-gray-400 leading-relaxed">
             I’m drawn to projects that bridge the gap between <strong>logic and daily life</strong>. 
             Whether it’s automating a business process or building a mindful log, 
-            my goal is to use my skills to build something that matters.
+            my goal is to use my skills to build something that makes a difference.
           </p>
         </div>
 
@@ -119,7 +119,7 @@ export default function About() {
           <h3 className="text-2xl font-bold dark:text-white tracking-tight">Beyond the code</h3>
           <p className="text-gray-600 dark:text-gray-400 leading-relaxed">
             When I&apos;m not in VS Code, you&apos;ll likely find me at the gym where I work as a fitness instructor, 
-            organizing life (yes, I have an app for that), or enjoying the balance of family life in Stavanger.
+            in my congregation, in a cafe drinking coffeeor enjoying family life in Stavanger.
           </p>
         </div>
       </section>
