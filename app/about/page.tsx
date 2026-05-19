@@ -119,7 +119,7 @@ export default function About() {
           <h3 className="text-2xl font-bold dark:text-white tracking-tight">Beyond the code</h3>
           <p className="text-gray-600 dark:text-gray-400 leading-relaxed">
             When I&apos;m not in VS Code, you&apos;ll likely find me at the gym where I work as a fitness instructor, 
-            in my congregation, in a cafe drinking coffeeor enjoying family life in Stavanger.
+            in my congregation, in a coffee shop drinking coffee or enjoying family life in Stavanger.
           </p>
         </div>
       </section>
