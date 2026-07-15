@@ -72,7 +72,7 @@ export default function AnkerOrder() {
           {/* Core App Screenshot Placeholder */}
           <div className="relative aspect-video w-full rounded-4xl overflow-hidden shadow-2xl border border-gray-100 dark:border-white/10 bg-gray-100 dark:bg-white/5 group">
             <Image
-              src="/projects/anker-screen-1.jpg"
+              src="/projects/anker-order.png"
               alt="Anker AS Dashboard Overview"
               fill
               className="object-cover transition-transform duration-700 group-hover:scale-102"
@@ -136,30 +136,6 @@ export default function AnkerOrder() {
               </p>
             </div>
 
-          </div>
-        </section>
-
-        {/* Interactive Gallery Segment */}
-        <section className="space-y-8">
-          <div className="text-center">
-            <h3 className="text-2xl font-black tracking-tighter mb-2">Interface</h3>
-            <p className="text-gray-500">Explore the design of the Anker order management system.</p>
-          </div>
-
-          <div className="flex gap-6 overflow-x-auto pb-6 snap-x no-scrollbar">
-            {[1, 2, 3].map((num) => (
-              <div
-                key={num}
-                className="relative flex-none w-64 md:w-80 aspect-video rounded-3xl overflow-hidden border border-gray-100 dark:border-white/10 bg-gray-50 shadow-lg snap-center transition-transform hover:scale-[1.01] duration-300"
-              >
-                <Image
-                  src={`/projects/anker-screen-${num}.jpg`}
-                  alt={`Anker Interface view ${num}`}
-                  fill
-                  className="object-cover"
-                />
-              </div>
-            ))}
           </div>
         </section>
 
