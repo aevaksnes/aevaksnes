@@ -62,7 +62,7 @@ export default function WhatIEat() {
                             <span className="text-orange-500 text-6xl">One Photo at a Time.</span>
                         </h2>
                         <p className="text-xl text-gray-600 dark:text-gray-400 leading-relaxed">
-                            What I Eat is a minimalist photo log designed to create a <span className="font-bold text-gray-900 dark:text-white">&quot;mindful pause&quot;</span> between the urge to eat and the action itself.
+                            What I Eat is a minimalist photo log designed to create a <span className="font-bold text-gray-900 dark:text-white">&quot;pause&quot;</span> before your eat. 
                         </p>
 
                         <div className="flex flex-wrap gap-3">
