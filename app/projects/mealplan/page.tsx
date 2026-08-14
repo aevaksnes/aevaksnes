@@ -134,11 +134,11 @@ export default function Mealplan() {
                         Recent Enhancements
                     </h3>
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
-                        <div className="space-y-3 opacity-50">
-                            <div className="flex items-center gap-2 font-bold text-gray-500 line-through">
+                        <div className="space-y-3">
+                            <div className="flex items-center gap-2 font-bold text-brand-purple text-lg">
                                 <WifiOff size={18} /> Offline Persistence
                             </div>
-                            <p className="text-sm text-gray-500">Native disk persistence is now fully implemented across all modules.</p>
+                            <p className="text-sm text-gray-600 dark:text-gray-400 leading-relaxed">Native disk persistence is now fully implemented across all modules.</p>
                         </div>
                         <div className="space-y-3">
                             <div className="flex items-center gap-2 font-bold text-brand-purple text-lg">

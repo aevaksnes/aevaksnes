@@ -8,9 +8,8 @@ import { ProjectWrapper } from "@/components/ProjectWrapper";
 import { ProjectUpdates } from "@/components/ProjectUpdates";
 import { ProjectDownloads } from "@/components/ProjectDowloads";
 import { notFound } from "next/navigation";
-import Link from "next/link";
 import Image from "next/image";
-import { Sparkles, Smartphone, Layout, Apple, Loader2, Info } from "lucide-react";
+import { Sparkles, Smartphone, Layout, Apple, Loader2, Info, ExternalLink } from "lucide-react";
 
 export default function Braindump() {
     const [project, setProject] = useState<Project | null>(null);
@@ -53,17 +52,22 @@ export default function Braindump() {
                 <section className="grid grid-cols-1 md:grid-cols-2 gap-16 items-center">
                     <div className="space-y-8">
                         <h2 className="text-4xl font-black tracking-tighter dark:text-white">The Concept</h2>
-                        <p className="text-xl text-gray-600 dark:text-gray-400 leading-relaxed">
-                            This was my first big project after returning to programming, and it was a project I am very passionate about. 
-                            I wanted to create a tool that would help people clear their minds. Not to save their thoughts, but to set them free.
-                            Sometimes there is a lot going on in our minds, and it can be hard to focus. 
-                            For me, writing things down, helps. 
-                            The prompts are there to help bring the thouhts out of your head and onto the page, and maybe even guide your thoughts in a new direction, towards gratitude, confiedence, and focus for instance.
-                            Make your own prompts or use the ones provided, and let your thoughts flow.
-                            If you have paper and pen, to write by hand can be even more effective, but the app is a good alternative when you don&apos;t have that available, and you can still use the prompts to get the thoughts going.
-                            I made this app many times, using different technologies, exploring differnt designs.
-                            It is now available as a PWA and on the Google Play Store if you want to register as a tester. 
-                        </p>
+                        <div className="space-y-4 text-lg text-gray-600 dark:text-gray-400 leading-relaxed">
+                            <p>
+                                This was my first big project after returning to programming, and it is a project I am very passionate about. 
+                                I wanted to create a tool that would help people clear their minds. Not to save their thoughts, but to set them free.
+                            </p>
+                            <p>
+                                Sometimes there is a lot going on in our minds, and it can be hard to focus. For me, writing things down helps. 
+                                The prompts are there to help bring the thoughts out of your head and onto the page, and maybe even guide your thoughts in a new direction, towards gratitude, confidence, and focus for instance.
+                            </p>
+                            <p>
+                                Make your own prompts or use the ones provided, and let your thoughts flow. If you have paper and pen, writing by hand can be even more effective, but the app is a great alternative when that is not available.
+                            </p>
+                            <p>
+                                I built this app multiple times, exploring different technologies and interface designs. It is now available both as a PWA and on the Google Play Store for testers.
+                            </p>
+                        </div>
 
                         <div className="grid gap-6">
                             <div className="flex gap-4">
@@ -78,11 +82,11 @@ export default function Braindump() {
 
                             <div className="flex gap-4">
                                 <div className="w-12 h-12 rounded-2xl bg-brand-teal/10 flex items-center justify-center shrink-0">
-                                    <Layout className="text-brand-teal" size={24} />
+                                    <Smartphone className="text-brand-teal" size={24} />
                                 </div>
                                 <div>
                                     <h4 className="font-bold text-gray-900 dark:text-white">Android App</h4>
-                                    <p className="text-sm text-gray-500 leading-relaxed">In testing on Google Play Store</p>
+                                    <p className="text-sm text-gray-500 leading-relaxed">In testing on Google Play Store.</p>
                                 </div>
                             </div>
 
@@ -92,7 +96,7 @@ export default function Braindump() {
                                 </div>
                                 <div>
                                     <h4 className="font-bold text-gray-900 dark:text-white">PWA</h4>
-                                    <p className="text-sm text-gray-500 leading-relaxed">To be accessible across all mobile and desktop devices.</p>
+                                    <p className="text-sm text-gray-500 leading-relaxed">Fully accessible across mobile, tablet, and desktop devices.</p>
                                 </div>
                             </div>
                         </div>
@@ -103,7 +107,7 @@ export default function Braindump() {
                         <div className="text-center space-y-4">
                             <h3 className="text-3xl font-black tracking-tighter">App Showcase</h3>
                             <p className="text-gray-500 max-w-xl mx-auto">
-                                Watch the official preview or explore the interface through the screenshots below.
+                                Watch the preview or explore the interface through the screenshots below.
                             </p>
                         </div>
 
@@ -181,18 +185,26 @@ export default function Braindump() {
 
                 {/* Collaboration / Testing CTA */}
                 <section className="p-10 md:p-16 rounded-4xl bg-brand-teal text-white shadow-2xl shadow-brand-teal/20 text-center">
-                    <h3 className="text-3xl font-black tracking-tighter mb-4">Want to participate?</h3>
+                    <h3 className="text-3xl font-black tracking-tighter mb-4">Want to try it?</h3>
                     <p className="text-lg opacity-90 max-w-2xl mx-auto mb-10 leading-relaxed">
-                        I am currently looking for testers for the Android version. If you are
-                        interested in mindfulness and early-access software, I would love to hear from you.
+                        Try the live PWA in your browser right now, or sign up as a tester for the native Android version.
                     </p>
-                    <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                        <a href="mailto:developing.aevaksnes@gmail.com" className="px-8 py-4 bg-white text-brand-teal font-bold rounded-2xl hover:scale-105 transition-transform shadow-lg">
+                    <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
+                        <a 
+                            href="https://aevaksnes-braindump.web.app/" 
+                            target="_blank" 
+                            rel="noopener noreferrer" 
+                            className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-8 py-4 bg-white text-brand-teal font-bold rounded-2xl hover:scale-105 transition-transform shadow-lg"
+                        >
+                            <span>Try Web Version (PWA)</span>
+                            <ExternalLink size={18} />
+                        </a>
+                        <a 
+                            href="mailto:developing.aevaksnes@gmail.com" 
+                            className="w-full sm:w-auto inline-flex items-center justify-center px-8 py-4 bg-brand-dark/20 backdrop-blur-md text-white border border-white/20 font-bold rounded-2xl hover:bg-brand-dark/30 transition-all"
+                        >
                             Join Testing Phase
                         </a>
-                        <Link href="#" className="px-8 py-4 bg-brand-dark/20 backdrop-blur-md text-white border border-white/20 font-bold rounded-2xl hover:bg-brand-dark/30 transition-all">
-                            Try Web Version
-                        </Link>
                     </div>
                 </section>
 

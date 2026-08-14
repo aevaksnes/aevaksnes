@@ -8,15 +8,15 @@ import { ProjectWrapper } from "@/components/ProjectWrapper";
 import { ProjectUpdates } from "@/components/ProjectUpdates";
 import { notFound } from "next/navigation";
 import Link from "next/link";
-import { 
-  Users, 
-  Bell, 
-  MessageSquare, 
-  Cloud, 
-  Loader2, 
-  Link as LinkIcon, 
-  ArrowRight,
-  ShieldCheck
+import {
+    Users,
+    Bell,
+    MessageSquare,
+    Cloud,
+    Loader2,
+    Link as LinkIcon,
+    ArrowRight,
+    ShieldCheck
 } from "lucide-react";
 
 export default function SharedKitchen() {
@@ -48,16 +48,16 @@ export default function SharedKitchen() {
     return (
         <ProjectWrapper title={project.title} tags={project.tags}>
             <div className="space-y-24">
-                
+
                 {/* Intro Section - The Digital Hearth */}
                 <section>
                     <div className="p-12 rounded-4xl bg-linear-to-br from-orange-500/10 to-brand-purple/10 border border-white/10 shadow-sm">
                         <h2 className="text-4xl md:text-5xl font-black mb-8 dark:text-white tracking-tighter">
-                            The Digital Hearth
+                            Share your kitchen
                         </h2>
                         <p className="text-xl text-gray-600 dark:text-gray-400 leading-relaxed max-w-3xl">
-                            Shared Kitchen is a social platform built for collaborative culinary inspiration. 
-                            By creating private &quot;kitchens&quot;, families and roommates can build a 
+                            Shared Kitchen is a social platform built for collaborative culinary inspiration.
+                            By creating private &quot;kitchens&quot;, families and roommates can build a
                             shared library of recipes and tips in real-time.
                         </p>
                     </div>
@@ -84,11 +84,20 @@ export default function SharedKitchen() {
                                     <LinkIcon size={24} />
                                 </div>
                                 <div>
-                                    <h4 className="font-bold text-lg mb-1 dark:text-white">Smart Link Previews</h4>
+                                    <h4 className="font-bold text-lg mb-1 dark:text-white">Save recipes in one place</h4>
                                     <p className="text-sm text-gray-500 leading-relaxed">
-                                        Metadata scraping for external recipe links, creating a visual and rich content library effortlessly.
+                                        Keep direct links to your favorite online recipes organized and accessible in one single place.
+                                    </p>
+                                    <h4 className="font-bold text-lg mb-1 mt-2 dark:text-white">Write your own</h4>
+                                    <p className="text-sm text-gray-500 leading-relaxed">
+                                        Write your own recipes, add notes to recipes you have tried, or attach food photos.
+                                    </p>
+                                    <h4 className="font-bold text-lg mb-1 mt-2 dark:text-white">Hashtag &amp; Keyword Search</h4>
+                                    <p className="text-sm text-gray-500 leading-relaxed">
+                                        Organize your collection with custom hashtags (e.g. <em>#quick</em>, <em>#dinner</em>, <em>#lowcarb</em>) for instant filtering.
                                     </p>
                                 </div>
+                    
                             </div>
                         </div>
                     </div>
@@ -142,8 +151,8 @@ export default function SharedKitchen() {
                         <div>
                             <h3 className="text-2xl font-bold mb-4 tracking-tight">Technical Complexity</h3>
                             <p className="text-gray-600 dark:text-gray-400 leading-relaxed">
-                                Building this app required advanced management of **Group-Based Access Control** in Firestore. 
-                                Ensuring that only invited members could read or write to specific kitchen collections was a 
+                                Building this app required advanced management of **Group-Based Access Control** in Firestore.
+                                Ensuring that only invited members could read or write to specific kitchen collections was a
                                 critical exercise in backend security and data modeling.
                             </p>
                         </div>
@@ -153,7 +162,7 @@ export default function SharedKitchen() {
                 {/* Main Action / Launch Section */}
                 <section className="flex flex-col items-center p-12 rounded-4xl bg-white dark:bg-white/5 border border-gray-100 dark:border-white/10 shadow-2xl relative overflow-hidden">
                     <div className="absolute top-0 left-0 w-full h-1 bg-linear-to-r from-orange-500 via-brand-purple to-brand-teal" />
-                    
+
                     <div className="mb-8 w-20 h-20 rounded-3xl bg-orange-500/10 flex items-center justify-center">
                         <Users className="text-orange-500" size={40} />
                     </div>
