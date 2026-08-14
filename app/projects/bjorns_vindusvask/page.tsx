@@ -14,8 +14,7 @@ import {
   ShieldCheck, 
   Mail, 
   Zap, 
-  ExternalLink,
-  Smartphone
+  ExternalLink
 } from "lucide-react";
 
 export default function BjornsVindusvask() {
@@ -51,11 +50,13 @@ export default function BjornsVindusvask() {
         {/* Intro - Professional & Down-to-earth */}
         <section className="animate-in fade-in slide-in-from-bottom-4 duration-700">
           <h2 className="text-4xl md:text-5xl font-black mb-8 dark:text-white tracking-tighter">
-            Modernizing a Local Family Business
+            Making an online presence for a local windowcleaning service that is both professional and down-to-earth.
           </h2>
           <p className="text-xl text-gray-600 dark:text-gray-400 leading-relaxed max-w-3xl">
-            This project started as a simple static site and has recently been rebuilt using <span className="text-brand-teal font-semibold">Next.js</span>. 
-            The focus was on improving performance, security, and the reliability of customer inquiries.
+            This project is a good illustration of my return to programming. 
+            It started as a simple static website, build on a template I found online when I first learned about github and github pages and has recently been rebuilt using <span className="text-brand-teal font-semibold">Next.js</span>. 
+            This is my husband's business, and where I myself work doing the office work.
+            It serves mainly as a tool to give the business an online presence, present our services, and to make it easy for customers to contact us.
           </p>
         </section>
 
@@ -72,7 +73,7 @@ export default function BjornsVindusvask() {
             <Mail className="text-brand-purple mb-4" size={32} />
             <h4 className="font-bold text-lg mb-2">Resend Integration</h4>
             <p className="text-sm text-gray-500 leading-relaxed">
-              Custom-built contact handling using the **Resend API**, ensuring fast and reliable email delivery.
+              Custom-built contact handling using the **Resend API**.
             </p>
           </div>
           <div className="p-8 rounded-4xl bg-white dark:bg-white/5 border border-gray-100 dark:border-white/10 shadow-sm">
@@ -84,7 +85,7 @@ export default function BjornsVindusvask() {
           </div>
         </section>
 
-        {/* Visual Showcase - Use your clean screenshots here */}
+        {/* Visual Showcase */}
         <section className="grid grid-cols-1 md:grid-cols-2 gap-8">
           <div className="space-y-6">
              <div className="relative aspect-16/10 rounded-4xl overflow-hidden border border-gray-100 dark:border-white/10 bg-gray-50 shadow-inner group">
@@ -95,7 +96,7 @@ export default function BjornsVindusvask() {
                   className="object-contain p-6 transition-transform group-hover:scale-105 duration-700" 
                 />
              </div>
-             <p className="text-sm text-gray-500 font-medium italic px-4">Desktop: Focusing on trust and clarity for the customer.</p>
+             <p className="text-sm text-gray-500 font-medium italic px-4">Desktop</p>
           </div>
           
           <div className="space-y-6">
@@ -107,7 +108,7 @@ export default function BjornsVindusvask() {
                   className="object-contain p-6 transition-transform group-hover:scale-105 duration-700" 
                 />
              </div>
-             <p className="text-sm text-gray-500 font-medium italic px-4">Mobile-first: Essential for local services on the go.</p>
+             <p className="text-sm text-gray-500 font-medium italic px-4">Mobile</p>
           </div>
         </section>
 
@@ -118,7 +119,7 @@ export default function BjornsVindusvask() {
             <h3 className="text-xl font-bold dark:text-white">The "Honeypot" Solution</h3>
           </div>
           <p className="text-gray-600 dark:text-gray-400 leading-relaxed">
-            Spam is a common issue for small business sites. To avoid intrusive CAPTCHAs, I implemented a hidden honeypot field. Bots automatically fill it out, allowing the system to silently reject the submission, while real humans never see the field. It’s a simple but effective way to keep the inbox clean.
+            To avoid spam, I implemented a hidden honeypot field. Bots automatically fill it out, allowing the system to silently reject the submission, while real humans never see the field.
           </p>
         </section>
 

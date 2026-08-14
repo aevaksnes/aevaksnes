@@ -54,8 +54,15 @@ export default function Braindump() {
                     <div className="space-y-8">
                         <h2 className="text-4xl font-black tracking-tighter dark:text-white">The Concept</h2>
                         <p className="text-xl text-gray-600 dark:text-gray-400 leading-relaxed">
-                            Braindump is a digital sanctuary designed for <strong>mental offloading</strong>.
-                            Built to help users clear their minds, it focuses on the act of writing rather than the permanence of saving.
+                            This was my first big project after returning to programming, and it was a project I am very passionate about. 
+                            I wanted to create a tool that would help people clear their minds. Not to save their thoughts, but to set them free.
+                            Sometimes there is a lot going on in our minds, and it can be hard to focus. 
+                            For me, writing things down, helps. 
+                            The prompts are there to help bring the thouhts out of your head and onto the page, and maybe even guide your thoughts in a new direction, towards gratitude, confiedence, and focus for instance.
+                            Make your own prompts or use the ones provided, and let your thoughts flow.
+                            If you have paper and pen, to write by hand can be even more effective, but the app is a good alternative when you don&apos;t have that available, and you can still use the prompts to get the thoughts going.
+                            I made this app many times, using different technologies, exploring differnt designs.
+                            It is now available as a PWA and on the Google Play Store if you want to register as a tester. 
                         </p>
 
                         <div className="grid gap-6">
@@ -65,7 +72,7 @@ export default function Braindump() {
                                 </div>
                                 <div>
                                     <h4 className="font-bold text-gray-900 dark:text-white">Thought Prompts</h4>
-                                    <p className="text-sm text-gray-500 leading-relaxed">Contextual cues designed to spark reflection and direct focus.</p>
+                                    <p className="text-sm text-gray-500 leading-relaxed">Cues designed to spark reflection and direct focus.</p>
                                 </div>
                             </div>
 
@@ -74,8 +81,18 @@ export default function Braindump() {
                                     <Layout className="text-brand-teal" size={24} />
                                 </div>
                                 <div>
-                                    <h4 className="font-bold text-gray-900 dark:text-white">PWA Architecture</h4>
-                                    <p className="text-sm text-gray-500 leading-relaxed">Built for speed and offline reliability across all mobile and desktop devices.</p>
+                                    <h4 className="font-bold text-gray-900 dark:text-white">Android App</h4>
+                                    <p className="text-sm text-gray-500 leading-relaxed">In testing on Google Play Store</p>
+                                </div>
+                            </div>
+
+                            <div className="flex gap-4">
+                                <div className="w-12 h-12 rounded-2xl bg-brand-teal/10 flex items-center justify-center shrink-0">
+                                    <Layout className="text-brand-teal" size={24} />
+                                </div>
+                                <div>
+                                    <h4 className="font-bold text-gray-900 dark:text-white">PWA</h4>
+                                    <p className="text-sm text-gray-500 leading-relaxed">To be accessible across all mobile and desktop devices.</p>
                                 </div>
                             </div>
                         </div>
@@ -106,7 +123,7 @@ export default function Braindump() {
                 <section className="space-y-12">
                     <div className="text-center">
                         <h3 className="text-2xl font-black tracking-tighter mb-2">Interface Gallery</h3>
-                        <p className="text-gray-500">A closer look at the mindfulness-focused design.</p>
+                        <p className="text-gray-500">A closer look at the design.</p>
                     </div>
 
                     {/* Horizontal scrollbar */}
